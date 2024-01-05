@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block content %}
+
+<div class="content">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-chart">
+        <div class="card-header">
+          <h2 class="font-weight-bold">About The Creators</h2>
+        </div>
+        <div class="row">
+          <!-- First Creator -->
+          <div class="col-sm-6">
+            <div class="creator-card">
+              <div class="creator-image">
+                <img src="{{ url_for('static', filename='assets/IMG_Webpage.jpeg') }}" class="img-fluid img-thumbnail" alt="Headshot Raul">
+              </div>
+              <div class="creator-caption">
+                  <p>Raul Mendy</p>
+                  <p>Welcome to our page! I am a computer science student minoring in cybersecurity and AI. I enjoyed working on this project and hope to build more features to make this site more interactive and enhance user experience!</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <div class="creator-card">
+                <div class="creator-image">
+                  <img src="{{ url_for('static', filename='assets/IMG_7630.jpg') }}" class="img-fluid img-thumbnail" alt="Headshot Kristian">
+                </div>
+                <div class="creator-caption">
+                  <p>Kristian Stavri</p>
+                  <p>Hello everyone, I am a fresh data engineer honing my skills inn real world batch pipelines with this website's back end.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+
+
+.creator-card {
+  margin: auto;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  align-items: center; /* Center items */
+  text-align: center; /* Center text for the caption */
+}
+
+.creator-image {
+  width: 35%; /* Image takes up 35% width */
+  align-self: center;
+  margin-bottom: 1rem; /* Space between image and caption */
+}
+
+.img-fluid.img-thumbnail {
+  width: 100%; /* Ensure image takes full width of its container */
+  height: auto;
+  border-radius: 10px; /* Optional for rounded corners */
+}
+
+.creator-caption {
+  width: 80%;
+  flex: 1;
+  padding-left: 20px; /* Space between image and text */
+}
+
+</style>
+{% endblock content %}
