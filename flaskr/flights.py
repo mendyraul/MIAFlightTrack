@@ -3,7 +3,6 @@ from flask import (
 )
 from werkzeug.exceptions import abort
 
-from flaskr.auth import login_required
 
 from flask import Blueprint, render_template
 from flaskr.db import connect_db
