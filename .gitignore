@@ -15,3 +15,5 @@ build/
 
 flaskr/schema.sql
 flaskr/config.py
+
+tests/
