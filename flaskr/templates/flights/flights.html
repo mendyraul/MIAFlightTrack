@@ -1,6 +1,10 @@
 <!doctype html>
-<title>{% block title %}{% endblock %} - Miami International Flight Tracker</title>
+<head>
+    <title>{% block title %}{% endblock %} - Miami International Flight Tracker</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='black-dashboard.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js"></script>
+</head>
 <nav>
     <h1>MIA Flights</h1>
 </nav>
@@ -12,10 +16,16 @@
                     <div class="row">
                         <div class="col-sm-6 text-left">
                             <h3 class="card-title">Miami International Airport</h3>
-                            <h4 class="card-category">Scheduled Flights</h4>
+                            <h4 class="card-category">Click on each header to sort scheduled flights by their header!</h4>
                         </div>
                         <div class="col-sm-6">
                             <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                <a href="/" class="btn btn-sm btn-primary btn-simple">
+                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Home</span>
+                                    <span class="d-block d-sm-none">
+                                        <i class="tim-icons icon-minimal-left"></i>
+                                    </span>
+                                </a>
                                 <label class="btn btn-sm btn-primary btn-simple active" id="0">
                                     <input type="radio" class="d-none d-sm-none" name="options" checked>
                                     <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block" onclick="showDeparting()" >  Departing  </span>
@@ -43,105 +53,104 @@
                 <div id="departing" class="graph-div"> 
                     <!-- Departing Flights Table -->
                     <table >
-                        <tr>
-                            <th>Flight #</th>
-                            <th>Departure Time</th>
-                            <th>Departure Estimated</th>
-                            <th>Departure Actual</th>
-                            <th>Destination</th>
-                            <th>Arrival Time</th>
-                            <th>Arrival Estimated</th>
-                            <th>Arrival Actual</th>
-                            <th>Status</th>
-                            <th>Departure Delay</th>
-                            <th>Arrival Delay</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th>Flight #</th>
+                                <th>Status</th>
+                                <!-- <th>Airline Code</th> -->
+                                <th>Destination</th>
+                                <th>Departure Scheduled</th>
+                                <th>Departure Estimated</th>
+                                <th>Departure Actual</th>
+                                <th>Arrival Scheduled</th>
+                                <th>Arrival Estimated</th>
+                                <th>Arrival Actual</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>    
+                        <tbody>
                         {% for flight in flights %}
-                        {% if flight.dep_iata == 'MIA' %}
-                        <tr>
-                            <td>{{ flight.flight_iata }}</td>
-                            <td>{{ flight.dep_time }}</td>
-                            <td>{{ flight.dep_estimated }}</td>
-                            <td>{{ flight.dep_actual }}</td>
-                            <td>{{ flight.arr_iata }}</td>
-                            <td>{{ flight.arr_time }}</td>
-                            <td>{{ flight.arr_estimated }}</td>
-                            <td>{{ flight.arr_actual }}</td>
-                            <td>{{ flight.status }}</td>
-                            <td>
-                                {% if flight.dep_delayed %}
-                                    {{ flight.dep_delayed }} min
-                                {% else %}
-                                    N/A
-                                {% endif %}
-                            </td>
-                            
-                            <td>
-                                {% if flight.arr_delayed %}
-                                    {{ flight.arr_delayed }} min
-                                {% else %}
-                                    N/A
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endif %}
-                        {% endfor %}
+                        {% if flight['dep_airport'] == 'MIA' %}
+                        
+                            <tr>
+                                <td>{{ flight['flight_number'] }}</td>
+                                <td>{{ flight['status'] }}</td>
+                                <!-- <td>{{ flight['airline_code'] }}</td> -->
+                                <td>{{ flight['arr_airport'] }}</td>
+                                <td>{{ flight['dep_scheduled'] }}</td>
+                                <td>{{ flight['dep_estimated'] }}</td>
+                                <td>{{ flight['dep_actual'] }}</td>
+                                <td>{{ flight['arr_scheduled'] }}</td>
+                                <td>{{ flight['arr_estimated'] }}</td>
+                                <td>{{ flight['arr_actual'] }}</td>
+                                <td>
+                                    {% if flight['duration'] %}
+                                        {{ flight['duration'] }} min
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>                                                                
+                            </tr>                        
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
 
                 <div id="arriving" class="graph-div" style =" display: none;">
                     <!-- Arriving Flights Table -->
                     <table >
-                        <tr>
-                            <th>Flight #</th>
-                            <th>Departure Time</th>
-                            <th>Departure Estimated</th>
-                            <th>Departure Actual</th>
-                            <th>Origin</th>
-                            <th>Arrival Time</th>
-                            <th>Arrival Estimated</th>
-                            <th>Arrival Actual</th>
-                            <th>Status</th>
-                            <th>Departure Delay</th>
-                            <th>Arrival Delay</th>
-                        </tr>
-                        {% for flight in flights %}
-                        {% if flight.dep_iata != 'MIA' %}
-                        <tr>
-                            <td>{{ flight.flight_iata }}</td>
-                            <td>{{ flight.dep_time }}</td>
-                            <td>{{ flight.dep_estimated }}</td>
-                            <td>{{ flight.dep_actual }}</td>
-                            <td>{{ flight.dep_iata }}</td>
-                            <td>{{ flight.arr_time }}</td>
-                        <td>{{ flight.arr_estimated }}</td>
-                            <td>{{ flight.arr_actual }}</td>
-                            <td>{{ flight.status }}</td>
-                            <td>
-                                {% if flight.dep_delayed %}
-                                    {{ flight.dep_delayed }} min
-                                {% else %}
-                                    N/A
-                                {% endif %}
-                            </td>
-                            
-                            <td>
-                                {% if flight.arr_delayed %}
-                                    {{ flight.arr_delayed }} min
-                                {% else %}
-                                    N/A
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% endif %}
-                        {% endfor %}
+                        <thead>
+                            <tr>
+                                <th>Flight #</th>
+                                <th>Status</th>
+                                <!-- <th>Airline Code</th> -->
+                                <th>Origin</th>
+                                <th>Departure Scheduled</th>
+                                <th>Departure Estimated</th>
+                                <th>Departure Actual</th>
+                                <th>Arrival Scheduled</th>
+                                <th>Arrival Estimated</th>
+                                <th>Arrival Actual</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for flight in flights %}
+                            {% if flight['arr_airport'] == 'MIA' %}
+                            <tr>
+                                <td>{{ flight['flight_number'] }}</td>
+                                <td>{{ flight['status'] }}</td>
+                                <!-- <td>{{ flight['airline_code'] }}</td> -->
+                                <td>{{ flight['dep_airport'] }}</td>
+                                <td>{{ flight['dep_scheduled'] }}</td>
+                                <td>{{ flight['dep_estimated'] }}</td>
+                                <td>{{ flight['dep_actual'] }}</td>
+                                <td>{{ flight['arr_scheduled'] }}</td>
+                                <td>{{ flight['arr_estimated'] }}</td>
+                                <td>{{ flight['arr_actual'] }}</td>
+                                <td>
+                                    {% if flight['duration'] %}
+                                        {{ flight['duration'] }} min
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
+<script>
+    $(document).ready(function() {
+        $("table").tablesorter();
+    });
+    </script>
 <script>
     function showDeparting() {
         document.getElementById('departing').style.display = 'block';

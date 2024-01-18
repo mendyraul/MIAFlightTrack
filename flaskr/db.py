@@ -3,7 +3,7 @@ import requests
 import psycopg2
 import psycopg2.extras
 from flaskr.config import API_KEY, DB_HOST, DB_USER, DB_NAME, DB_PASSWORD
-
+# from config import API_KEY, DB_HOST, DB_USER, DB_NAME, DB_PASSWORD
 # Function to connect to the database
 def connect_db():
     conn = psycopg2.connect(
