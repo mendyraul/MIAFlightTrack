@@ -2,8 +2,14 @@
 import requests
 import psycopg2
 import psycopg2.extras
-from config import API_KEY, DB_HOST, DB_USER, DB_NAME, DB_PASSWORD
-# from config import API_KEY, DB_HOST, DB_USER, DB_NAME, DB_PASSWORD
+import os
+
+API_KEY = os.environ.get('API_KEY')
+DB_HOST = os.environ.get('DB_HOST')
+DB_USER = os.environ.get('DB_USER')
+DB_NAME = os.environ.get('DB_NAME')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
+
 # Function to connect to the database
 def connect_db():
     conn = psycopg2.connect(
