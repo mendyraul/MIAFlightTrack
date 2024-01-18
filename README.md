@@ -1,1 +1,1 @@
-https://github.com/mendyraul/MiamiFlightTracker/blob/main/Flight%20Project.pdf
+[embed]https://github.com/mendyraul/MiamiFlightTracker/blob/main/Flight%20Project.pdf[/embed]
