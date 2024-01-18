@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 80
 
 # Define environment variable
-ENV FLASK_APP __init__.py
+ENV FLASK_APP flaskr
 ENV FLASK_RUN_HOST 0.0.0.0
 
 # Run app.py when the container launches
