@@ -97,7 +97,6 @@ def process_flights(response):
 
 def main():
     # API Endpoints for Departing and Arriving Flights
-    API_KEY = "2f222ffa-6ceb-4261-ae17-4369ebca0eca"
     dep_iata = 'MIA'
     dep_url = f'https://airlabs.co/api/v9/schedules?dep_iata={dep_iata}&api_key={API_KEY}'
     arr_iata = 'MIA'
