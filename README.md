@@ -1,1 +1,1 @@
-[embed]https://github.com/mendyraul/MiamiFlightTracker/blob/main/Flight%20Project.pdf[/embed]
+<image src="https://github.com/mendyraul/MiamiFlightTracker/blob/main/Flight%20Project.pdf">
