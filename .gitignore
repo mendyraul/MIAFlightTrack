@@ -13,7 +13,7 @@ dist/
 build/
 *.egg-info/
 
-flaskr/schema.sql
+
 config.py
 
 tests/

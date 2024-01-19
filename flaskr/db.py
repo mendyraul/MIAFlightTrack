@@ -20,6 +20,15 @@ def connect_db():
     )
     return conn
 
+# def init_db():
+#     """Initialize the database with schema.sql."""
+#     conn = connect_db()
+#     cursor = conn.cursor()
+#     with open('schema.sql', 'r') as f:
+#         cursor.execute(f.read())
+#     conn.commit()
+#     cursor.close()
+#     conn.close()
 
 # Function to truncate flights_staging table
 def truncate_staging_table():
@@ -101,45 +110,44 @@ def process_flights(response):
         flights.append(flight_info)
     return flights
 
-def main():
-    # API Endpoints for Departing and Arriving Flights
-    dep_iata = 'MIA'
-    dep_url = f'https://airlabs.co/api/v9/schedules?dep_iata={dep_iata}&api_key={API_KEY}'
-    arr_iata = 'MIA'
-    arr_url = f'https://airlabs.co/api/v9/schedules?arr_iata={arr_iata}&api_key={API_KEY}'
+# def main():
+    # # API Endpoints for Departing and Arriving Flights
+    # dep_iata = 'MIA'
+    # dep_url = f'https://airlabs.co/api/v9/schedules?dep_iata={dep_iata}&api_key={API_KEY}'
+    # arr_iata = 'MIA'
+    # arr_url = f'https://airlabs.co/api/v9/schedules?arr_iata={arr_iata}&api_key={API_KEY}'
 
-    # Get Departing Flights Data
-    print("Script beginning...")
-    dep_result = requests.get(dep_url)
-    if dep_result.status_code == 200:
-        flights_dep = process_flights(dep_result.json())
-        print("API response acquired.")
-    else:
-        print(f"Failed to retrieve departing flights. Status code: {dep_result.status_code}")
-        print(dep_result.text)
-        flights_dep = []
+    # # Get Departing Flights Data
+    # print("Script beginning...")
+    # dep_result = requests.get(dep_url)
+    # if dep_result.status_code == 200:
+    #     flights_dep = process_flights(dep_result.json())
+    #     print("API response acquired.")
+    # else:
+    #     print(f"Failed to retrieve departing flights. Status code: {dep_result.status_code}")
+    #     print(dep_result.text)
+    #     flights_dep = []
 
-    # Get Arriving Flights Data
-    arr_result = requests.get(arr_url)
-    if arr_result.status_code == 200:
-        flights_arr = process_flights(arr_result.json())
-    else:
-        print(f"Failed to retrieve arriving flights. Status code: {arr_result.status_code}")
-        print(arr_result.text)
-        flights_arr = []
+    # # Get Arriving Flights Data
+    # arr_result = requests.get(arr_url)
+    # if arr_result.status_code == 200:
+    #     flights_arr = process_flights(arr_result.json())
+    # else:
+    #     print(f"Failed to retrieve arriving flights. Status code: {arr_result.status_code}")
+    #     print(arr_result.text)
+    #     flights_arr = []
 
-    # Truncate the table before inserting new data
-    truncate_staging_table()
+    # # Truncate the table before inserting new data
+    # truncate_staging_table()
 
-    # Insert data into the database
-    insert_flights(flights_dep + flights_arr)
+    # # Insert data into the database
+    # insert_flights(flights_dep + flights_arr)
 
-    # Run the proc to merge data into history table
-    load_to_history_table()
+    # # Run the proc to merge data into history table
+    # load_to_history_table()
+
+    # init_db()
 
 
-
-
-if __name__ == "__main__":
-    main()
-    
+# if __name__ == "__main__":
+#     main()
